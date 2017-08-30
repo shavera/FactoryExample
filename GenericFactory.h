@@ -8,20 +8,21 @@
 #include <algorithm>
 #include <functional>
 #include <map>
+#include <memory>
 #include <type_traits>
 
 template<typename Base, typename ClassIDKey=std::string>
 class GenericFactory {
-    using BaseCreateFn = std::function<Base *()>;
+    using BaseCreateFn = std::function<std::unique_ptr<Base>()>;
     using FnRegistry = std::map<ClassIDKey, BaseCreateFn>;
 
 public:
-    static GenericFactory &instance() {
+    static GenericFactory& instance() {
         static GenericFactory factory;
         return factory;
     }
 
-    void RegCreateFn(const ClassIDKey &key, const BaseCreateFn &createFunction) {
+    void RegCreateFn(const ClassIDKey& key, const BaseCreateFn& createFunction) {
         auto regIt = std::find_if(registry.begin(), registry.end(),
                                   [key](const auto &registryEntry) {
                                       return key == registryEntry.first;
@@ -34,7 +35,7 @@ public:
         }
     }
 
-    Base *Create(const ClassIDKey &key) const {
+    std::unique_ptr<Base> Create(const ClassIDKey& key) const {
         auto registryIt = registry.find(key);
         if (registry.cend() != registryIt) {
             return registryIt->second();
@@ -53,11 +54,11 @@ template<class Base,
 >
 class RegisterInFactory {
 public:
-    static Base *CreateInstance() {
-        return new Derived;
+    static std::unique_ptr<Base>CreateInstance() {
+        return std::make_unique<Derived>();
     }
 
-    explicit RegisterInFactory(const ClassIDKey &id) {
+    explicit RegisterInFactory(const ClassIDKey& id) {
         GenericFactory<Base>::instance().RegCreateFn(id, CreateInstance);
     }
 };
