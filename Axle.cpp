@@ -6,6 +6,11 @@
 
 #include <iostream>
 
+namespace {
+    const std::string RegistrationName{"Axle"};
+    RegisterInFactory<Alpha, Axle> registerMe{RegistrationName};
+}
+
 void Axle::print() {
     std::cout << "Axle" << std::endl;
 }

@@ -6,6 +6,11 @@
 
 #include <iostream>
 
+namespace {
+    const std::string RegistrationName{"Apple"};
+    RegisterInFactory<Alpha, Apple> registerMe{RegistrationName};
+}
+
 void Apple::print() {
     std::cout << "Apple" << std::endl;
 }
