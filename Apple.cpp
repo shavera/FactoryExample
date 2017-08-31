@@ -12,5 +12,5 @@ namespace {
 }
 
 void Apple::print() {
-    std::cout << "Apple" << std::endl;
+    std::cout << "Printing Apple" << std::endl;
 }
