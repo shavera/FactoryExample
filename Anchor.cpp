@@ -12,5 +12,5 @@ namespace {
 }
 
 void Anchor::print() {
-    std::cout << "Anchor" << std::endl;
+    std::cout << "Printing Anchor" << std::endl;
 }

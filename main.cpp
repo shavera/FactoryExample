@@ -1,19 +1,12 @@
 #include <iostream>
 #include <memory>
 
-#include "Alpha.h"
+#include "Beta.h"
 
 int main() {
-    std::unique_ptr<Alpha> a{nullptr};
-
-    a = AlphaFactory::instance().Create("Anchor");
-    a->print();
-
-    a = AlphaFactory::instance().Create("Apple");
-    a->print();
-
-    a = AlphaFactory::instance().Create("Axle");
-    a->print();
-
+    Beta b;
+    b.printFromAlphaOfType("Anchor");
+    b.printFromAlphaOfType("Apple");
+    b.printFromAlphaOfType("Axle");
     return 0;
 }
